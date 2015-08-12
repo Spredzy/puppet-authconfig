@@ -29,7 +29,7 @@
 #    NIS Domain
 #
 #  [*nisserver*]
-#    NIS Server
+#    NIS Server (optional, leave undefined to choose broadcast mode)
 #
 #  [*shadow*]
 #    Enable shadow password
@@ -223,10 +223,6 @@ class authconfig (
 
         if !$nisdomain {
           fail('The nisdomain parameter is required when nis set to true')
-        }
-
-        if !$nisserver {
-          fail('The nisserver parameter is required when nis is set to true')
         }
 
       }
