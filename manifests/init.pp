@@ -457,6 +457,19 @@ class authconfig (
         }
       }
 
+      if $nis {
+        package { $authconfig::params::nis_packages:
+          ensure => installed,
+        } ->
+        service { $authconfig::params::nis_services:
+          ensure     => running,
+          enable     => true,
+          hasstatus  => true,
+          hasrestart => true,
+          before     => Exec['authconfig command'],
+        }
+      }
+
       if $mkhomedir {
         package { $authconfig::params::mkhomedir_packages:
           ensure => installed,
