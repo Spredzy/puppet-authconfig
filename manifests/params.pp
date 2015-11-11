@@ -17,6 +17,11 @@ class authconfig::params () {
   $nis_services       = ['ypbind']
   $services           = []
   $cache_services     = ['nscd']
-  $ldap_services      = ['nslcd']
+
+  # RHEL 5 Doesn't have nslcd package available.
+  $ldap_services      = $::operatingsystemmajrelease ? {
+    5       => [],
+    default => ['nslcd'],
+  }   
 
 }
