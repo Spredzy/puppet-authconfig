@@ -501,9 +501,9 @@ class authconfig (
       }
 
       if $krb5 {
-        package { $authconfig::params::krb5_packages:
+        ensure_packages($authconfig::params::krb5_packages, {
           ensure => installed,
-        }
+        })
       }
 
       if $sssd {
@@ -536,16 +536,16 @@ class authconfig (
       }
 
       if $mkhomedir {
-        package { $authconfig::params::mkhomedir_packages:
+        ensure_packages($authconfig::params::mkhomedir_packages, {
           ensure => installed,
-        }
+        })
       # service oddjobd is started automatically by authconfig
       }
 
       if $smartc {
-        package { $authconfig::params::smartcard_packages:
+        ensure_packages($authconfig::params::smartcard_packages, {
           ensure => installed,
-        }
+        })
       }
 
       package { $authconfig::params::packages:
