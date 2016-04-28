@@ -148,7 +148,7 @@ class authconfig (
   $nis            = false,
   $nisdomain      = undef,
   $nisserver      = undef,
-  $passalgo       = 'md5',
+  $passalgo       = 'sha512',
   $shadow         = true,
   $krb5           = false,
   $krb5realm      = undef,
@@ -279,12 +279,6 @@ class authconfig (
 
       if $nisserver {
         $nisserver_val = "--nisserver=${nisserver}"
-      }
-
-      # MD5
-      $md5_flg = $passalgo ? {
-        'md5'     => '--enablemd5',
-        default => '--disablemd5',
       }
 
       # hash/crypt algorithm for new passwords
@@ -482,7 +476,7 @@ class authconfig (
 
       $extra_flags = "${preferdns_flg} ${forcelegacy_flg} ${pamaccess_flg}"
 
-      $pass_flags            = "${md5_flg} ${passalgo_val} ${shadow_flg}"
+      $pass_flags            = "${passalgo_val} ${shadow_flg}"
       $authconfig_flags      = "${ldap_flags} ${nis_flags} ${pass_flags} ${krb5_flags} ${winbind_flags} ${extra_flags} ${cache_flg} ${mkhomedir_flg} ${sssd_flg} ${sssdauth_flg} ${rfc2307bis_flg} ${locauthorize_flg} ${sysnetauth_flg} ${smartcard_flags}"
       $authconfig_update_cmd = "authconfig ${authconfig_flags} --updateall"
       $authconfig_test_cmd   = "authconfig ${authconfig_flags} --test"
