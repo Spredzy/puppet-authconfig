@@ -43,6 +43,8 @@ if RUBY_VERSION < '2.2.5'
   gem 'beaker', '~> 2.0', :require => false
   # beaker-rspec 6.0.0 requires beaker 3.0. Lock to 5.6.0
   gem 'beaker-rspec', '= 5.6.0', :require => false
+  # rspec_core < 3.4.4 requires rake < 11.0
+  gem 'rake', '< 11.0'
 end
 
 
