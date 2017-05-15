@@ -47,5 +47,8 @@ if RUBY_VERSION < '2.2.5'
   gem 'rake', '< 11.0'
 end
 
+if RUBY_VERSION < '2.0.0'
+  gem 'public_suffix', '< 1.5'
+end
 
 # vim:ft=ruby
