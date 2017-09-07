@@ -106,11 +106,11 @@
 #  [*mkhomedir*]
 #
 #  [*smartc*]
-#    Boolean to enable or disable SmartCard Authentication. 
+#    Boolean to enable or disable SmartCard Authentication.
 #    (Default: false)
 #
 #  [*smartcaction*]
-#    Boolean to determine SmartCard Removal Action. Values: True = Lock, False = Ignore 
+#    Boolean to determine SmartCard Removal Action. Values: True = Lock, False = Ignore
 #    (Default: false)
 #
 #  [*smartcrequire*]
@@ -483,7 +483,7 @@ class authconfig (
       $extra_flags = "${preferdns_flg} ${forcelegacy_flg} ${pamaccess_flg}"
 
       $pass_flags            = "${md5_flg} ${passalgo_val} ${shadow_flg}"
-      $authconfig_flags      = "${ldap_flags} ${nis_flags} ${pass_flags} ${krb5_flags} ${winbind_flags} ${extra_flags} ${cache_flg} ${mkhomedir_flg} ${sssd_flg} ${sssdauth_flg} ${rfc2307bis_flg} ${locauthorize_flg} ${sysnetauth_flg} ${smartcard_flags}"
+      $authconfig_flags      = "${ldap_flags} ${nis_flags} ${pass_flags} ${krb5_flags} ${winbind_flags} ${extra_flags} ${cache_flg} ${mkhomedir_flg} ${sssd_flg} ${sssdauth_flg} ${rfc2307bis_flg} ${locauthorize_flg} ${sysnetauth_flg} ${smartcard_flags} ${fingerprint_flg}"
       $authconfig_update_cmd = "authconfig ${authconfig_flags} --updateall"
       $authconfig_test_cmd   = "authconfig ${authconfig_flags} --test"
       $exec_check_cmd        = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`authconfig --test`\""
