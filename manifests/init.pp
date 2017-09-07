@@ -542,6 +542,18 @@ class authconfig (
       # service oddjobd is started automatically by authconfig
       }
 
+      if ($nis) {
+        package { $authconfig::params::nis_packages:
+          ensure => installed,
+        } ->
+        service { $authconfig::params::nis_services:
+          ensure     => running,
+          enable     => true,
+          hasstatus  => true,
+          hasrestart => true,
+        }
+      }
+
       if $smartc {
         package { $authconfig::params::smartcard_packages:
           ensure => installed,
