@@ -105,6 +105,29 @@ describe 'authconfig' do
 
     end
 
+    context 'SSSD enabled' do
+      before :each do
+        params.merge!(
+          :sssd => true,
+        )
+      end
+
+      ['sssd','sssd-client'].each do |package|
+        it "installs package: #{package}" do
+          should contain_package(package)
+        end
+      end
+
+      it 'configures service: sssd' do
+        should contain_service('sssd').with({
+          'ensure'     => 'running',
+          'enable'     => 'true',
+          'hasstatus' => 'true',
+          'hasrestart' => 'true',
+        })
+      end
+
+    end
 
   end
 

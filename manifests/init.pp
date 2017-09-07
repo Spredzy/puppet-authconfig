@@ -106,11 +106,11 @@
 #  [*mkhomedir*]
 #
 #  [*smartc*]
-#    Boolean to enable or disable SmartCard Authentication. 
+#    Boolean to enable or disable SmartCard Authentication.
 #    (Default: false)
 #
 #  [*smartcaction*]
-#    Boolean to determine SmartCard Removal Action. Values: True = Lock, False = Ignore 
+#    Boolean to determine SmartCard Removal Action. Values: True = Lock, False = Ignore
 #    (Default: false)
 #
 #  [*smartcrequire*]
@@ -489,63 +489,67 @@ class authconfig (
       $exec_check_cmd        = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`authconfig --test`\""
 
       if $cache {
-        package { $authconfig::params::cache_packages:
+        ensure_resource('package', $authconfig::params::cache_packages, {
           ensure => installed,
-        } ->
-        service { $authconfig::params::cache_services:
-          ensure     => running,
+        })
+        ensure_resource('service', $authconfig::params::cache_services, {
+          ensure => running,
           enable     => true,
           hasstatus  => true,
           hasrestart => true,
-        }
+        })
+        Package[$authconfig::params::cache_packages] ->
+        Service[$authconfig::params::cache_services]
       }
 
       if $krb5 {
-        package { $authconfig::params::krb5_packages:
+        ensure_resource('package', $authconfig::params::krb5_packages, {
           ensure => installed,
-        }
+        })
       }
 
       if $sssd {
         # if we're using sssd, then sssd takes care of ldap connectivity.
         # therefore, we only need the sssd packages and services, not the
         # ldap packages and services
-        package { $authconfig::params::sssd_packages:
+        ensure_resource('package', $authconfig::params::sssd_packages, {
           ensure => installed,
-        }
+        })
         # sssd services must only run after the authconfig command has set
         # up the config.
-        service { $authconfig::params::sssd_services:
+        ensure_resource('service', $authconfig::params::sssd_services, {
           ensure     => running,
           enable     => true,
           hasstatus  => true,
           hasrestart => true,
           require    => Exec['authconfig command'],
-        }
+        })
       } elsif $ldap {
-        package { $authconfig::params::ldap_packages:
+        ensure_resource('package', $authconfig::params::ldap_packages, {
           ensure => installed,
-        } ->
-        service { $authconfig::params::ldap_services:
+        })
+        ensure_resource('service', $authconfig::params::ldap_services, {
           ensure     => running,
           enable     => true,
           hasstatus  => true,
           hasrestart => true,
           before     => Exec['authconfig command'],
-        }
+        })
+        Package[$authconfig::params::ldap_packages] ->
+        Service[$authconfig::params::ldap_services]
       }
 
       if $mkhomedir {
-        package { $authconfig::params::mkhomedir_packages:
+        ensure_resource('package', $authconfig::params::mkhomedir_packages, {
           ensure => installed,
-        }
+        })
       # service oddjobd is started automatically by authconfig
       }
 
       if $smartc {
-        package { $authconfig::params::smartcard_packages:
+        ensure_resource('package', $authconfig::params::smartcard_packages, {
           ensure => installed,
-        }
+        })
       }
 
       package { $authconfig::params::packages:
