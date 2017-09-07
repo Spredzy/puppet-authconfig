@@ -103,7 +103,7 @@ NIS Domain
 
 #### `nisserver`
 
-NIS Server
+NIS Server - NIS server hostname, leaving this undef will choose NIS broadcast mode
 
 #### `shadow`
 
