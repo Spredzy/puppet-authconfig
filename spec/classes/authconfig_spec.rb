@@ -15,7 +15,7 @@ describe 'authconfig' do
       {
        'nis'      => false,
        'shadow'   => true,
-       'passalgo' => 'md5',
+       'passalgo' => 'sha512',
       }
     end
 
